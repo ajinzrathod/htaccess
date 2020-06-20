@@ -1,0 +1,50 @@
+# ===================================================================
+
+Options -Indexes
+#   No one can access folder that has no index pages in it
+
+Options +Indexes
+#   Can access folder that has no index pages in it
+#   Capitalization is recommended but not required
+
+
+IndexOptions FancyIndexing
+#   this will change fonts and look of page
+
+
+DirectoryIndex index1.php
+#   This will look for default page as index1.php
+
+
+IndexIgnore indexignore.php
+#   This will not list index1 anymore, but you can access it using url
+
+
+IndexIgnore indexignore.php *.php
+#   *.php ignores all files that end with .php
+
+
+#   If we have both files, index.html and index.php, 
+#   it takes the file which has higher precendence according to server
+
+
+
+#   https://stackoverflow.com/questions/20546861/use-htaccess-to-set-404-error-document-located-in-the-same-folder
+#   Read above link to know why relative paths does not work in ErrorDocument line
+
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f  
+RewriteCond %{REQUEST_FILENAME} !-d  
+RewriteRule .* error404.php [L] 
+
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f  
+RewriteCond %{REQUEST_FILENAME} !-d  
+RewriteRule .* error403.php [L] 
+
+
+#    If we dont write RewriteEngine Lines, we have to write absolute paths like this
+#       ErrorDocument 404 /aj/htaccess/error404.php
+#       ErrorDocument 403 /aj/htaccess/error403.php
